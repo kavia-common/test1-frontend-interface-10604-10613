@@ -1,104 +1,403 @@
-/* CSS Variables for Theme Management */
+/* First Page Input Screen (Upload Documents & Configure)
+   Authoritative spec: assets/first_page_input_screen_design_notes.md
+*/
+
+/* Design variables */
 :root {
-  /* Light theme colors */
-  --bg-primary: #ffffff;
-  --bg-secondary: #f8f9fa;
-  --text-primary: #282c34;
-  --text-secondary: #61dafb;
-  --border-color: #e9ecef;
-  --button-bg: #007bff;
-  --button-text: #ffffff;
+  --bg-canvas: #0b0c0f; /* page background */
+  --bg-surface: #111521; /* cards */
+  --bg-surface-2: #0f1320; /* inner panels / option cards / inputs */
+  --border-subtle: #2a3347; /* card borders */
+  --border-subtle-2: #333c52; /* input borders */
+  --text-primary: #e8edf7; /* main text */
+  --text-secondary: #9aa6bf; /* helper text */
+  --text-muted: #7f8aa3; /* more muted */
+  --accent-yellow: #f2c14e; /* CTA */
+  --accent-yellow-hover: #e6b646;
+  --accent-yellow-text: #111216;
+  --focus-ring: rgba(242, 193, 78, 0.35);
+  --icon-accent: #f2c14e;
 }
 
-[data-theme="dark"] {
-  /* Dark theme colors */
-  --bg-primary: #1a1a1a;
-  --bg-secondary: #282c34;
-  --text-primary: #ffffff;
-  --text-secondary: #61dafb;
-  --border-color: #404040;
-  --button-bg: #0056b3;
-  --button-text: #ffffff;
+* {
+  box-sizing: border-box;
 }
 
-.App {
-  text-align: center;
-  background-color: var(--bg-primary);
+.fp {
+  min-height: 100vh;
+  background: var(--bg-canvas);
   color: var(--text-primary);
-  min-height: 100vh;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  font-family: "Inter", "Helvetica Neue", Arial, sans-serif;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* Top bar (thin, subtle) */
+.fp-topbar {
+  height: 42px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 0 18px;
+  border-bottom: 1px solid rgba(42, 51, 71, 0.55);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.fp-topbar__left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 160px;
 }
 
-.App-header {
-  background-color: var(--bg-secondary);
-  min-height: 100vh;
+.fp-topbar__brandDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent-yellow);
+  box-shadow: 0 0 0 3px rgba(242, 193, 78, 0.15);
+}
+
+.fp-topbar__brand {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-primary);
+  opacity: 0.9;
+}
+
+.fp-topbar__nav {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+}
+
+.fp-topbar__link {
+  font-size: 11px;
+  color: var(--text-secondary);
+  text-decoration: none;
+  padding: 6px 8px;
+  border-radius: 6px;
+}
+
+.fp-topbar__link:hover {
+  background: rgba(17, 21, 33, 0.7);
+  color: var(--text-primary);
+}
+
+.fp-topbar__right {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  min-width: 120px;
+}
+
+.fp-topbar__pill {
+  font-size: 11px;
+  color: var(--text-secondary);
+  background: rgba(17, 21, 33, 0.6);
+  border: 1px solid rgba(42, 51, 71, 0.75);
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+
+/* Main centered column */
+.fp-main {
+  padding: 22px 24px 24px;
+}
+
+.fp-container {
+  max-width: 1020px;
+  margin: 0 auto;
+}
+
+.fp-titleBlock {
+  text-align: center;
+  margin-top: 4px;
+  margin-bottom: 16px;
+}
+
+.fp-title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  color: var(--text-primary);
+}
+
+.fp-subtitle {
+  margin: 6px 0 0;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+/* Cards */
+.fp-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  padding: 14px 16px 16px;
+  margin-top: 16px;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.25);
+}
+
+.fp-card__header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 12px;
+}
+
+.fp-card__icon {
+  color: var(--icon-accent);
+  flex: 0 0 auto;
+}
+
+.fp-card__headerText {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--text-primary);
+  opacity: 0.95;
+}
+
+/* Dropzone */
+.fp-dropzone {
+  width: 100%;
+  height: 92px;
+  background: var(--bg-surface-2);
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  padding: 10px 12px;
+  cursor: pointer;
+
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: var(--text-primary);
-  transition: background-color 0.3s ease;
-  position: relative;
+  gap: 6px;
+
+  transition: border-color 0.15s ease, background-color 0.15s ease,
+    transform 0.15s ease;
 }
 
-.App-link {
+.fp-dropzone:hover {
+  border-color: rgba(242, 193, 78, 0.55);
+  background: rgba(15, 19, 32, 0.95);
+  transform: translateY(-1px);
+}
+
+.fp-dropzone:focus-visible {
+  outline: none;
+  border-color: var(--accent-yellow);
+  box-shadow: 0 0 0 3px var(--focus-ring);
+}
+
+.fp-dropzone__title {
+  font-size: 12px;
+  font-weight: 650;
   color: var(--text-secondary);
-  transition: color 0.3s ease;
 }
 
-.theme-toggle {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  background-color: var(--button-bg);
-  color: var(--button-text);
-  border: none;
-  border-radius: 8px;
-  padding: 10px 20px;
-  font-size: 14px;
-  font-weight: 600;
+.fp-dropzone__subtitle {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+/* Output type cards (3 columns) */
+.fp-options {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.fp-optionCard {
+  height: 76px;
+  background: var(--bg-surface-2);
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  padding: 12px;
+  text-align: left;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease,
+    transform 0.15s ease;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
 }
 
-.theme-toggle:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-  opacity: 0.9;
+.fp-optionCard:hover {
+  transform: translateY(-1px);
+  border-color: rgba(242, 193, 78, 0.45);
 }
 
-.theme-toggle:active {
+.fp-optionCard.is-selected {
+  border-color: var(--accent-yellow);
+  box-shadow: 0 0 0 3px rgba(242, 193, 78, 0.15);
+}
+
+.fp-optionCard:focus-visible {
+  outline: none;
+  border-color: var(--accent-yellow);
+  box-shadow: 0 0 0 3px var(--focus-ring);
+}
+
+.fp-optionCard__title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.fp-optionCard__desc {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-muted);
+  line-height: 1.25;
+}
+
+/* Configuration form */
+.fp-formGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 16px;
+  row-gap: 12px;
+}
+
+.fp-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.fp-label {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--text-secondary);
+}
+
+.fp-input {
+  height: 36px;
+  width: 100%;
+  background: var(--bg-surface-2);
+  border: 1px solid var(--border-subtle-2);
+  border-radius: 6px;
+  padding: 0 12px;
+  color: var(--text-primary);
+  font-size: 12px;
+}
+
+.fp-input::placeholder {
+  color: var(--text-muted);
+}
+
+.fp-input:focus {
+  outline: none;
+  border-color: var(--accent-yellow);
+  box-shadow: 0 0 0 3px var(--focus-ring);
+}
+
+/* Select styling with subtle chevron */
+.fp-select {
+  appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, var(--text-muted) 50%),
+    linear-gradient(135deg, var(--text-muted) 50%, transparent 50%),
+    linear-gradient(to right, transparent, transparent);
+  background-position: calc(100% - 15px) 14px, calc(100% - 10px) 14px,
+    calc(100% - 2.1em) 0.4em;
+  background-size: 5px 5px, 5px 5px, 1px 1.7em;
+  background-repeat: no-repeat;
+  padding-right: 30px;
+}
+
+/* Environment pill row + tag */
+.fp-pillRow {
+  display: flex;
+  align-items: center;
+  height: 36px;
+}
+
+.fp-tagPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  height: 30px;
+  padding: 0 12px;
+  border-radius: 999px;
+  background: var(--bg-surface-2);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  font-size: 11.5px;
+  font-weight: 700;
+}
+
+.fp-tagPill__x {
+  opacity: 0.85;
+  font-size: 14px;
+  line-height: 1;
+}
+
+/* CTA */
+.fp-ctaRow {
+  display: flex;
+  justify-content: center;
+  margin-top: 16px;
+  padding-bottom: 20px;
+}
+
+.fp-cta {
+  height: 36px;
+  padding: 0 16px;
+  border: none;
+  border-radius: 6px;
+  background: var(--accent-yellow);
+  color: var(--accent-yellow-text);
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: background-color 0.15s ease, transform 0.15s ease,
+    box-shadow 0.15s ease;
+  box-shadow: 0 10px 18px rgba(0, 0, 0, 0.25);
+}
+
+.fp-cta:hover {
+  background: var(--accent-yellow-hover);
+  transform: translateY(-1px);
+}
+
+.fp-cta:active {
   transform: translateY(0);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.fp-cta:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--focus-ring), 0 10px 18px rgba(0, 0, 0, 0.25);
+}
+
+/* Responsive behavior (as per notes) */
+@media (max-width: 768px) {
+  .fp-main {
+    padding: 18px 18px 22px;
   }
-  to {
-    transform: rotate(360deg);
+
+  .fp-options {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .fp-formGrid {
+    grid-template-columns: 1fr;
   }
 }
 
-/* Responsive design for mobile */
-@media (max-width: 768px) {
-  .theme-toggle {
-    top: 10px;
-    right: 10px;
-    padding: 8px 16px;
-    font-size: 12px;
+@media (max-width: 520px) {
+  .fp-topbar__nav {
+    display: none;
+  }
+
+  .fp-options {
+    grid-template-columns: 1fr;
+  }
+
+  .fp-cta {
+    width: min(360px, 100%);
   }
 }
